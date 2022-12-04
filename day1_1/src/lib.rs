@@ -17,18 +17,20 @@ impl Config {
 }
 
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
+    // Read the file
     let contents = fs::read_to_string(config.filename)?;
-    // let nums: Vec<&str> = contents.split(",").collect();
+
+    // Vector Traits!!!
     let counts = contents
-        .split("\n\n")
+        .split("\n\n") // Split on \n\n (empty line) to seperate the elves
         .map(|s| {
+            // map to get the total value for each elf
             s.split("\n")
-                .filter_map(|n| n.parse::<i32>().ok())
-                .sum::<i32>()
-        })
-        .collect::<Vec<i32>>();
-    let max = counts.iter().max().unwrap();
-    let position = counts.iter().position(|val| val == max);
-    println!("Max Elf # {:?} has {:?} Calories", position, max);
+                .filter_map(|n| n.parse::<i32>().ok()) // filter_map is the best: try to map and throw out anything that doesn't work
+                .sum::<i32>() // we ended up with numbers, add them up for each elf seperately
+        });
+    // The counts iterator will produce all of the totals for the elves
+    let max = counts.max().unwrap(); // a bit unsafe, but its Advent! :D
+    println!("Max Elf has {:?} Calories", max);
     Ok(())
 }
