@@ -1,4 +1,4 @@
-use day2_1::Config;
+use day2_2::Config;
 use std::env;
 use std::process;
 
@@ -8,7 +8,7 @@ fn main() {
         println!("Problem getting args!: {}", err);
         process::exit(1);
     });
-    if let Err(e) = day2_1::run(config) {
+    if let Err(e) = day2_2::run(config) {
         println!("Application Error: {}", e);
         process::exit(1);
     }
